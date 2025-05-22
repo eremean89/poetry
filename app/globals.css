@@ -1,0 +1,205 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @layer base {
+    :root {
+      --background: 39 60% 90%;
+      --foreground: 30 20% 20%;
+      --card: 39 60% 95%;
+      --card-foreground: 30 20% 20%;
+      --popover: 39 60% 95%;
+      --popover-foreground: 30 20% 20%;
+      --primary: 30 50% 40%;
+      --primary-foreground: 39 60% 90%;
+      --secondary: 30 40% 80%;
+      --secondary-foreground: 30 20% 20%;
+      --muted: 30 40% 85%;
+      --muted-foreground: 30 20% 35%;
+      --accent: 30 40% 75%;
+      --accent-foreground: 30 20% 20%;
+      --destructive: 0 60% 50%;
+      --destructive-foreground: 39 60% 90%;
+      --border: 30 30% 70%;
+      --input: 30 30% 70%;
+      --ring: 30 50% 40%;
+      --radius: 0.5rem;
+    }
+
+    .dark {
+      --background: 30 20% 15%;
+      --foreground: 39 60% 90%;
+      --card: 30 20% 20%;
+      --card-foreground: 39 60% 90%;
+      --popover: 30 20% 20%;
+      --popover-foreground: 39 60% 90%;
+      --primary: 39 60% 70%;
+      --primary-foreground: 30 20% 20%;
+      --secondary: 39 60% 50%;
+      --secondary-foreground: 39 60% 90%;
+      --muted: 30 20% 25%;
+      --muted-foreground: 39 60% 70%;
+      --accent: 30 20% 40%;
+      --accent-foreground: 39 60% 90%;
+      --destructive: 0 60% 50%;
+      --destructive-foreground: 39 60% 90%;
+      --border: 30 20% 30%;
+      --input: 30 20% 30%;
+      --ring: 39 60% 70%;
+    }
+  }
+}
+
+
+* {
+  font-family: var(--font-nunito), sans-serif;
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  overflow-y: auto;
+}
+
+::-webkit-scrollbar {
+  width: 0px;  
+  height: 0px;  
+}
+
+
+body:hover ::-webkit-scrollbar {
+  width: 6px;  
+  height: 6px;  
+}
+
+
+::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 6px;
+}
+
+
+body:hover ::-webkit-scrollbar-thumb {
+  background: #996633;  
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+button {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border: 2px solid transparent;
+}
+
+button:hover {
+  background-color: hsl(var(--primary-foreground));
+  color: hsl(var(--primary));
+  border-color: hsl(var(--primary-hue), 70%, 53.3%);
+}
+
+.hidden {
+  display: none !important;
+}
+
+
+.spaced {
+  margin-top: 1em;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+button:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+
+
+.rhap_container {
+  background-color: transparent;
+  color: #996633;
+  border-radius: 12px;
+  padding: 4px 10px;
+  font-size: 0.5rem; 
+  min-height: 10px !important; 
+}
+
+.rhap_main-controls-button {
+  color: #996633 !important;
+  font-size: 30px !important; 
+  width: 32px;
+  height: 32px;
+}
+
+.rhap_main-controls-button:hover {
+  background-color: transparent !important;
+}
+
+/* Кнопка громкости */
+.rhap_volume-button {
+  color: #996633 !important;
+  font-size: 22px !important;
+  width: 28px;
+  height: 28px;
+  margin-right: 20px;
+}
+
+.rhap_volume-button:hover {
+  background-color: transparent !important;
+}
+
+/* Прогресс-бар */
+.rhap_progress-bar {
+  background-color: #555 !important;
+  height: 4px !important;
+}
+
+.rhap_progress-filled {
+  background-color: #996633 !important;
+  height: 4px !important;
+}
+
+.rhap_progress-indicator {
+  background-color: #996633 !important;
+  width: 10px !important;
+  height: 10px !important;
+  margin-top: 5px;
+}
+
+/* Громкость */
+.rhap_volume-bar {
+  background-color: #996633 !important;
+  height: 3px !important;
+}
+
+.rhap_volume-indicator {
+  background-color: #996633 !important;
+  width: 8px !important;
+  height: 8px !important;
+  margin-top: 1px;
+}
+
+
+
+#nprogress .bar {
+  background: #996633 !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px #996633, 0 0 5px #996633 !important;
+}
+
+#nprogress .spinner {
+  display: none !important;
+}

@@ -1,0 +1,151 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider  = "postgresql"
+    url       = env("POSTGRES_URL")
+    directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model User {
+    id Int @id @default(autoincrement())
+
+    fullName String
+    email    String    @unique
+    password String
+    role     UserRole  @default(USER)
+    verified DateTime?
+
+    provider   String?
+    providerId String?
+
+    createdAt        DateTime          @default(now())
+    updateAt         DateTime          @updatedAt
+    VerificationCode VerificationCode?
+}
+
+model VerificationCode {
+    id Int @id @default(autoincrement())
+
+    user   User @relation(fields: [userId], references: [id])
+    userId Int  @unique
+
+    code String
+
+    createdAt DateTime @default(now())
+
+    @@unique([userId, code])
+}
+
+model Poet {
+    id          Int       @id @default(autoincrement())
+    name        String
+    image       String
+    birthDate   DateTime
+    deathDate   DateTime?
+    description String
+    works       Work[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    quizzes Quiz[]
+    media   Media[]
+}
+
+model Media {
+    id     Int       @id @default(autoincrement())
+    type   MediaType
+    title  String
+    url    String
+    poetId Int?
+    poet   Poet?     @relation(fields: [poetId], references: [id], onDelete: Cascade)
+    workId Int?
+    work   Work?     @relation("WorkMedia", fields: [workId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+}
+
+enum MediaType {
+    AUDIO
+    VIDEO
+}
+
+model Work {
+    id      Int     @id @default(autoincrement())
+    title   String
+    content String
+    link    String
+    poetId  Int
+    poet    Poet    @relation(fields: [poetId], references: [id])
+    media   Media[] @relation("WorkMedia")
+
+    createdAt DateTime @default(now())
+}
+
+model Quiz {
+    id    Int    @id @default(autoincrement())
+    title String
+
+    poetId Int?
+    poet   Poet? @relation(fields: [poetId], references: [id], onDelete: Cascade)
+
+    questions Question[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Question {
+    id     Int  @id @default(autoincrement())
+    quiz   Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
+    quizId Int
+
+    prompt     String
+    type       QuestionType
+    options    Option[]
+    matchPairs MatchPair[]
+    textAnswer TextAnswer?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Option {
+    id         Int      @id @default(autoincrement())
+    question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+    questionId Int
+
+    text      String
+    isCorrect Boolean
+}
+
+model MatchPair {
+    id         Int      @id @default(autoincrement())
+    question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+    questionId Int
+
+    left  String
+    right String
+}
+
+model TextAnswer {
+    id         Int      @id @default(autoincrement())
+    question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+    questionId Int      @unique
+
+    answer String
+}
+
+enum QuestionType {
+    SINGLE
+    MULTIPLE
+    MATCH
+    TEXT
+}
+
+enum UserRole {
+    USER
+    ADMIN
+}
