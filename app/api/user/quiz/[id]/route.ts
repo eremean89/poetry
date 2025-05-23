@@ -73,69 +73,74 @@ export async function POST(req: NextRequest) {
   let correct = 0;
   const total = quiz.questions.length;
 
-  for (const question of quiz.questions) {
+  const detailedResults = quiz.questions.map((question) => {
     const userAnswer = answers[question.id.toString()];
-    if (!userAnswer) continue;
+    let isCorrect = false;
 
     switch (question.type) {
       case "SINGLE": {
         const correctIndex = question.options.findIndex((o) => o.isCorrect);
-        if (
-          userAnswer.type === "single" &&
-          userAnswer.selectedIndex === correctIndex
-        ) {
-          correct++;
-        }
+        isCorrect =
+          userAnswer?.type === "single" &&
+          userAnswer.selectedIndex === correctIndex;
         break;
       }
 
       case "MULTIPLE": {
-        if (userAnswer.type !== "multiple") break;
-        const correctIndexes = question.options
-          .map((o, i) => (o.isCorrect ? i : null))
-          .filter((i): i is number => i !== null);
-        const sortedUser = [...userAnswer.selectedIndexes].sort();
-        const sortedCorrect = [...correctIndexes].sort();
-        if (
-          sortedUser.length === sortedCorrect.length &&
-          sortedUser.every((val, i) => val === sortedCorrect[i])
-        ) {
-          correct++;
+        if (userAnswer?.type === "multiple") {
+          const correctIndexes = question.options
+            .map((o, i) => (o.isCorrect ? i : null))
+            .filter((i): i is number => i !== null);
+          const sortedUser = [...userAnswer.selectedIndexes].sort();
+          const sortedCorrect = [...correctIndexes].sort();
+          isCorrect =
+            sortedUser.length === sortedCorrect.length &&
+            sortedUser.every((val, i) => val === sortedCorrect[i]);
         }
         break;
       }
 
       case "TEXT": {
-        if (userAnswer.type !== "text") break;
-        const correctText = question.textAnswer?.answer.trim().toLowerCase();
-        const userText = userAnswer.text.trim().toLowerCase();
-        if (correctText && userText === correctText) {
-          correct++;
-        }
+        isCorrect =
+          userAnswer?.type === "text" &&
+          userAnswer.text.trim().toLowerCase() ===
+            question.textAnswer?.answer.trim().toLowerCase();
         break;
       }
 
       case "MATCH": {
-        if (userAnswer.type !== "match") break;
-        const correctPairs = question.matchPairs.map((p) => ({
-          left: p.left,
-          right: p.right,
-        }));
-        const allMatched =
-          userAnswer.pairs.length === correctPairs.length &&
+        isCorrect =
+          userAnswer?.type === "match" &&
+          userAnswer.pairs.length === question.matchPairs.length &&
           userAnswer.pairs.every(
-            (up, index) =>
-              up.left === correctPairs[index].left &&
-              up.right === correctPairs[index].right
+            (p, i) =>
+              p.left === question.matchPairs[i].left &&
+              p.right === question.matchPairs[i].right
           );
-
-        if (allMatched) {
-          correct++;
-        }
         break;
       }
     }
-  }
 
-  return NextResponse.json({ score: correct, total });
+    if (isCorrect) correct++;
+
+    return {
+      questionId: question.id,
+      isCorrect,
+      correctAnswer: {
+        type: question.type,
+        correctIndexes:
+          question.options
+            ?.map((o, i) => (o.isCorrect ? i : null))
+            .filter((i): i is number => i !== null) ?? [],
+        correctText: question.textAnswer?.answer ?? null,
+        correctPairs: question.matchPairs ?? [],
+      },
+    };
+  });
+
+  return NextResponse.json({
+    score: correct,
+    total,
+    detailedResults,
+  });
 }
