@@ -2,7 +2,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useModal } from "@/app/context/modal-context";
+import { useModal } from "@/components/shared/context/modal-context";
 import { Header } from "./header";
 
 export default function HeaderClient() {

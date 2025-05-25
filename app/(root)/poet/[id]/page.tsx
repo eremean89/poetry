@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, notFound } from "next/navigation";
 import PoetTemplate from "@/components/shared/poet-template";
 import Modal from "@/components/shared/modal";
-import { useModal } from "@/app/context/modal-context";
+import { useModal } from "@/components/shared/context/modal-context";
 
 
 interface Work {

@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Question } from "@/app/types/quiz-types";
+import { Question } from "@/components/shared/types/quiz-types";
 import { X } from "lucide-react";
 import React from "react";
 

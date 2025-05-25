@@ -1,4 +1,4 @@
-import { ModalContextProvider } from "../context/modal-context";
+import { ModalContextProvider } from "../../components/shared/context/modal-context";
 import { Metadata } from "next";
 import HeaderClient from "@/components/shared/header-client";
 import { Suspense } from "react";

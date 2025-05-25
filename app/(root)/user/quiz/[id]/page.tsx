@@ -7,7 +7,7 @@ import {
   Answer,
   ServerQuestion,
   MatchPair,
-} from "@/app/types/quiz-types";
+} from "@/components/shared/types/quiz-types";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";

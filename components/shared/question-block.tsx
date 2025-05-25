@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Question } from "@/app/types/quiz-types";
+import { Question } from "@/components/shared/types/quiz-types";
 import QuestionSingle from "./questionTypes/question-single";
 import QuestionMultiple from "./questionTypes/question-multiple";
 import QuestionMatch from "./questionTypes/question-match";

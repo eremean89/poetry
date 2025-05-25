@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/select";
 
 import QuestionBlock from "@/components/shared/question-block";
-import { Question, ServerQuestion } from "@/app/types/quiz-types";
+import { Question, ServerQuestion } from "@/components/shared/types/quiz-types";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 

@@ -8,7 +8,7 @@ import { Button } from "../ui";
 import { LibraryBig } from "lucide-react";
 import Link from "next/link";
 import { SearchInput } from "./search-input";
-import { useModal } from "@/app/context/modal-context";
+import { useModal } from "@/components/shared/context/modal-context";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   DropdownMenu,

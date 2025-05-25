@@ -2,7 +2,7 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
-import { Question } from "@/app/types/quiz-types";
+import { Question } from "@/components/shared/types/quiz-types";
 import React from "react";
 
 interface Props {
