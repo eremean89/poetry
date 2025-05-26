@@ -145,7 +145,7 @@ export default function QuizAdminPage() {
               (q: ServerQuestion) => {
                 const base = {
                   id: uuidv4(),
-                  question: q.question,
+                  question: q.prompt,
                   type: q.type.toLowerCase() as Question["type"],
                 };
 

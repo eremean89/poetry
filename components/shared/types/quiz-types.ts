@@ -12,7 +12,7 @@ export interface MatchPair {
 
 export interface ServerQuestion {
   id: number;
-  question: string;
+  prompt: string;
   type: ServerQuestionType; 
   options?: { text: string; isCorrect: boolean }[];
   matchPairs?: MatchPair[];
