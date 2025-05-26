@@ -364,7 +364,7 @@ export default function QuizPage() {
                         <ArrowLeft className="w-5 h-5" />
                         Вернуться к поэту
                       </Button>
-                      {/* Кнопка “Показать ответы” */}
+                      {/* Кнопка “Проверить ответы” */}
                       {!!result && (
                         <Button
                           variant="ghost"
@@ -374,7 +374,7 @@ export default function QuizPage() {
                             setOpen(false);
                           }}
                         >
-                          Показать ответы
+                          Проверить ответы
                         </Button>
                       )}
                       {/* Кнопка “Пройти заново” */}
