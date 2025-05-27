@@ -31,6 +31,9 @@ export const LoginForm: React.FC<Props> = ({ onClose }) => {
       if (!resp?.ok) {
         throw Error();
       }
+      toast.success("Успешная авторизация", {
+        icon: "✅",
+      });
       onClose?.();
     } catch (error) {
       console.error("Error [LOGIN]", error);
