@@ -1,6 +1,13 @@
 "use client";
 
-import { useEffect, useState, useReducer, useCallback, useMemo } from "react";
+import {
+  useEffect,
+  useState,
+  useReducer,
+  useCallback,
+  useMemo,
+  useRef,
+} from "react";
 import { redirect, useParams } from "next/navigation";
 import {
   Question,
@@ -72,6 +79,7 @@ interface DetailedResult {
 }
 
 export default function QuizPage() {
+  const startTimeRef = useRef<number>(Date.now());
   const { id } = useParams();
   const [questions, setQuestions] = useState<Question[]>([]);
   const [title, setTitle] = useState("");
@@ -134,6 +142,7 @@ export default function QuizPage() {
         setError("Ошибка при загрузке викторины");
         setLoading(false);
       });
+    startTimeRef.current = Date.now();
   }, [id]);
 
   if (status === "loading") {
@@ -171,10 +180,12 @@ export default function QuizPage() {
     }
 
     try {
+      const duration = Math.round((Date.now() - startTimeRef.current) / 1000);
+
       const res = await fetch(`/api/user/quiz/${id}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ answers }),
+        body: JSON.stringify({ answers, duration }),
       });
       const data = await res.json();
       setResult({

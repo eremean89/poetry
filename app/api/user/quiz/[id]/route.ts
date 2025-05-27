@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/prisma/prisma-client";
 import { Answer } from "@/components/shared/types/quiz-types";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export async function GET(req: NextRequest) {
   const id = req.nextUrl.pathname.split("/").pop();
@@ -50,8 +52,24 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Нет ID" }, { status: 400 });
   }
 
-  const body = await req.json();
-  const answers: Record<string, Answer> = body.answers;
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.email) {
+    return NextResponse.json({ error: "Неавторизован" }, { status: 401 });
+  }
+  const user = await prisma.user.findUnique({
+    where: { email: session.user.email },
+  });
+  if (!user) {
+    return NextResponse.json(
+      { error: "Пользователь не найден" },
+      { status: 404 }
+    );
+  }
+
+  const { answers, duration } = (await req.json()) as {
+    answers: Record<string, Answer>;
+    duration?: number;
+  };
 
   const quiz = await prisma.quiz.findFirst({
     where: { poetId: parseInt(id, 10) },
@@ -71,6 +89,7 @@ export async function POST(req: NextRequest) {
   }
 
   let correct = 0;
+
   const total = quiz.questions.length;
 
   const detailedResults = quiz.questions.map((question) => {
@@ -136,6 +155,15 @@ export async function POST(req: NextRequest) {
         correctPairs: question.matchPairs ?? [],
       },
     };
+  });
+  const percentage = total > 0 ? Math.round((correct / total) * 100) : 0;
+  await prisma.quizResult.create({
+    data: {
+      userId: user.id,
+      quizId: quiz.id,
+      score: percentage,
+      duration: duration ?? null,
+    },
   });
 
   return NextResponse.json({
