@@ -6,7 +6,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
-
       id: string;
       role?: string;
     } & DefaultSession["user"];
@@ -24,7 +23,7 @@ declare module "next-auth/jwt" {
   }
 }
 
-export const authOptions: AuthOptions = {
+const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
