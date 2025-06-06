@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/prisma/prisma-client";
 import { Answer } from "@/components/shared/types/quiz-types";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth/auth-options";
+
 
 export async function GET(req: NextRequest) {
   const id = req.nextUrl.pathname.split("/").pop();

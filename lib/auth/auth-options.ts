@@ -1,10 +1,9 @@
-// lib/auth/auth-options.ts
+
 import { prisma } from "@/prisma/prisma-client";
 import { compare, hashSync } from "bcrypt";
 import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-// authOptions БЕЗ handler
 export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
