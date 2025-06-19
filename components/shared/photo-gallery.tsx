@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { createPortal } from "react-dom";
@@ -72,12 +71,14 @@ export default function PhotoGallery({ photos }: PhotoGalleryProps) {
                 whileHover={{ scale: 1.05 }}
                 layoutId={`photo-${i}`}
               >
-                <Image
+                <img
                   src={photo.src}
                   alt={photo.caption || `Фото ${i + 1}`}
                   width={150}
                   height={100}
-                  objectFit="cover"
+                  style={{
+                    objectFit: "cover",
+                  }}
                 />
               </motion.button>
             ))}
