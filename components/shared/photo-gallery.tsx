@@ -23,7 +23,6 @@ export default function PhotoGallery({ photos }: PhotoGalleryProps) {
   const next = () =>
     setLightboxIndex((i) => (i === null ? null : (i + 1) % photos.length));
 
-
   const updateScrollButtons = () => {
     const el = scrollRef.current;
     if (el) {
@@ -131,23 +130,20 @@ export default function PhotoGallery({ photos }: PhotoGalleryProps) {
                   onClick={(e) => e.stopPropagation()}
                 >
                   {/* Изображение */}
-                  <Image
+                  {}
+                  <img
                     src={photos[lightboxIndex].src}
                     alt={
                       photos[lightboxIndex].caption ||
                       `Фото ${lightboxIndex + 1}`
                     }
-                    width={0}
-                    height={0}
-                    sizes="90vw"
                     style={{
+                      objectFit: "contain",
                       maxWidth: "90vw",
                       maxHeight: "90vh",
                       width: "auto",
                       height: "auto",
                     }}
-                    objectFit="contain"
-                    priority
                   />
 
                   {/* Подпись */}

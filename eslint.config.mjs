@@ -10,7 +10,16 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
+  // базовые правила Next.js
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+
+  // наш дополнительный блок с отключением правила
+  {
+    rules: {
+      // полностью выключаем ворнинг про <img>
+      "@next/next/no-img-element": "off",
+    },
+  },
 ];
 
 export default eslintConfig;

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
@@ -63,7 +62,7 @@ export default function PoetTemplate({
       <div className="flex items-center gap-8 mb-8">
         {/* Фото, вынесенное отдельно */}
         <div className="flex-shrink-0">
-          <Image
+          <img
             src={image}
             alt={name}
             width={300}
