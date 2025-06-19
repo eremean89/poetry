@@ -42,7 +42,7 @@ export default function PoetPage() {
         const res = await fetch(`/api/poets/${id}`);
         const data = await res.json();
 
-        const photoBase = `/media/poets/${data.id}/photos/`;
+        const photoBase = `/media/poets/${data.id}/`;
         const fullPhotos = (data.photos || []).map(
           (f: string) => photoBase + f
         );
