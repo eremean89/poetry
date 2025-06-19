@@ -139,7 +139,7 @@ export default function PoetTemplate({
       </section>
 
       {/* Фотогалерея */}
-      {galleryPhotos.length > 0 && <PhotoGallery photos={galleryPhotos} />}
+      <PhotoGallery photos={galleryPhotos} />
 
       {/* Видеогалерея */}
       {videos && videos.length > 0 && (
