@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/prisma/prisma-client";
-import fs from "fs";
-import path from "path";
+import photosData from "@/photos.json";
 
 export const dynamic = "force-dynamic";
 
@@ -25,21 +24,8 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Поэт не найден" }, { status: 404 });
   }
 
-  const photosDir = path.join(
-    process.cwd(),
-    "public",
-    "media",
-    "poets",
-    String(poetId),
-    "photos"
-  );
-
-  let photos: string[] = [];
-  if (fs.existsSync(photosDir)) {
-    photos = fs
-      .readdirSync(photosDir)
-      .filter((f) => /\.(jpe?g|png|webp|gif)$/i.test(f));
-  }
+  const key = poetId.toString() as keyof typeof photosData;
+  const photos = photosData[key] || [];
 
   const audios = poet.media
     .filter((m) => m.type === "AUDIO")
